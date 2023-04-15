@@ -4,7 +4,7 @@ export function rendering(array) {
      <a class="gallery__link" href="${largeImageURL}">
   <img class="gallery__image" src="${webformatURL}" alt="${tags}"/>
 </a>
-</div>
+
 <div class="info">
     <p class="info-item">
       <b>Likes ${likes}</b>
@@ -18,5 +18,6 @@ export function rendering(array) {
     <p class="info-item">
       <b>Downloads ${downloads}</b>
     </p>
+    </div>
   </div>`).join(""); 
 }

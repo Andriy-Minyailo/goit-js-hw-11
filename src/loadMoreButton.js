@@ -5,7 +5,7 @@ export class LoadMoreButton {
         this.loading = loading;
         this.buttonAdress = buttonAdress;
     }
-    buttonState(isHiden = this.isHiden, disabled = this.disabled, loading = this.loading) {
+    buttonState({ isHiden = this.isHiden, disabled = this.disabled, loading = this.loading }) {
         if (isHiden) {
             this.buttonAdress.classList.add('is-hidden');
         } else {
@@ -17,9 +17,9 @@ export class LoadMoreButton {
             this.buttonAdress.disabled = false;
         }
         if (loading) {
-            this.buttonAdress.textContent = 'Loading';
+            this.buttonAdress.textContent = 'Loading...';
         } else {
-            this.buttonAdress.textContent = 'load-more';
+            this.buttonAdress.textContent = 'Load-more';
         }
     }
 }

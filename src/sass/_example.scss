@@ -28,19 +28,44 @@
 .search-form {
   display: flex;
   justify-content: center;
-  background-color: rgb(84, 84, 219);
+  background-color: rgb(11, 174, 238);
   padding: 20px 0;
     & input {
+        padding: 5px;
         border-radius: 4px;
         border: none;
+        width: 250px;
       }
     & button {
+      display: block;
+      position: relative;
+      right: 50px;
+      padding: 10px;
       border-radius: 4px;
       border: none;
+      font-style: normal;
+  
     }
   }
-    .is-hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
+.search-form__icon{
+  display: inline-block;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+}
+
+.load-more {
+  display: block;
+margin-left: auto;
+margin-right: auto;
+padding: 10px;
+border-radius: 4px;
+  border: none;
+  background-color: rgb(11, 174, 238);
+  color:antiquewhite
+}
+.load-more[disabled] {
+  background-color: rgb(11, 238, 68);
+}

@@ -1,0 +1,46 @@
+.gallery {
+        display: block;
+        @include tablet {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 15px;
+      }
+}
+.gallery__item {
+    width: 100%;
+     @include tablet {
+        width: calc((100% - 30px) / 3);
+    }
+    @include desktop {
+        width: calc((100% - 45px) / 4);
+    }
+}
+.gallery__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    @include tablet {
+    // height: 150;
+    }
+    @include desktop {
+        // height: 185;
+    }
+}
+.info {
+    display: flex;
+}
+.info-item {
+    margin: 0;
+    padding: 5px;
+    font-size: 10px;
+    text-align: center;
+    @include tablet {
+        padding: 5px;
+        font-size: 10px;
+        }
+     @include desktop {
+        padding: 5px;
+        font-size: 12px;
+    }
+}
