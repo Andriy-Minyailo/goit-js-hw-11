@@ -4,7 +4,6 @@ export function markup(array) {
      <a class="gallery__link" href="${largeImageURL}">
   <img class="gallery__image" src="${webformatURL}" alt="${tags}"/>
 </a>
-
 <div class="gallery__info">
     <p class="gallery__info-item">
       <b>Likes ${likes}</b>

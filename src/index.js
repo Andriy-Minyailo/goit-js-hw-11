@@ -33,12 +33,13 @@ async function onSumbitForm(event) {
         return;
     }
     refs.searchButton.disabled = true;
+    requestServer.params.page = 0;
+    refs.gallery.innerHTML = '';
     onloadMoreButton.buttonState({
         isHiden: false,
         loading: true,
     });
-        requestServer.params.page = 0;
-    refs.gallery.innerHTML = '';
+    
     try {
         const response = await requestServer.onRequestServer(searchQuery.value);
         const { hits, totalHits } = response.data;
@@ -49,23 +50,26 @@ async function onSumbitForm(event) {
             refs.searchButton.disabled = false;
             return;
         }
-         Notify.success(`Hooray! We found ${totalHits} images.`)
+
+        Notify.success(`Hooray! We found ${totalHits} images.`)
         refs.gallery.insertAdjacentHTML("beforeend", markup(hits));
         refs.searchButton.disabled = false;
-        if (totalHits <= 40) {
-        onloadMoreButton.buttonState({
-        isHiden: true,
-        disabled: true,
-         });
-            return
-        };
-        onloadMoreButton.buttonState({
-        isHiden: false,
-        disabled: false,
-        loading: false,
-    });
-       const lightbox = new SimpleLightbox('.gallery a');
+       
+        const lightbox = new SimpleLightbox('.gallery a');
         lightbox.refresh();
+
+        if (totalHits <= 40) {
+            onloadMoreButton.buttonState({
+                isHiden: true,
+                disabled: true,
+            })
+        } else {
+            onloadMoreButton.buttonState({
+            isHiden: false,
+            disabled: false,
+            loading: false,
+                });
+        }  
     } catch(error) {
     console.log(error);
   };
@@ -88,19 +92,19 @@ async function onSumbitLoadMore(event) {
         loading: false,
         });
             
-        const { height: cardHeight } = document.querySelector(".gallery").firstElementChild.getBoundingClientRect();
-        window.scrollBy({
-        top: cardHeight * 2,
-         behavior: "smooth",
-        });
-        totalImagesUploaded += 40;
+         totalImagesUploaded += 40;
         if (totalImagesUploaded >= totalHits) {
             Notify.warning("We're sorry, but you've reached the end of search results.");
             onloadMoreButton.buttonState({
             isHiden: true,
             disabled: true,
             }); 
-        }
+            }
+        const { height: cardHeight } = document.querySelector(".gallery").firstElementChild.getBoundingClientRect();
+        window.scrollBy({
+        top: cardHeight * 2,
+         behavior: "smooth",
+        });
         const lightbox = new SimpleLightbox('.gallery a');
             lightbox.refresh();
             
