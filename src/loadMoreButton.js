@@ -6,20 +6,8 @@ export class LoadMoreButton {
         this.buttonAdress = buttonAdress;
     }
     buttonState({ isHiden = this.isHiden, disabled = this.disabled, loading = this.loading }) {
-        if (isHiden) {
-            this.buttonAdress.classList.add('is-hidden');
-        } else {
-            this.buttonAdress.classList.remove('is-hidden');
-        }
-        if (disabled) {
-            this.buttonAdress.disabled = true;
-        } else {
-            this.buttonAdress.disabled = false;
-        }
-        if (loading) {
-            this.buttonAdress.textContent = 'Loading...';
-        } else {
-            this.buttonAdress.textContent = 'Load-more';
-        }
+        isHiden ? this.buttonAdress.classList.add('visually-hidden') : this.buttonAdress.classList.remove('visually-hidden');
+        disabled ? this.buttonAdress.disabled = true : this.buttonAdress.disabled = false;
+        loading ? this.buttonAdress.textContent = 'Loading...' : this.buttonAdress.textContent = 'Load-more';
     }
 }

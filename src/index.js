@@ -1,9 +1,8 @@
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import axios from 'axios';
 import { RequestServer } from './requestServer';
-import { rendering } from './renderind';
+import { markup } from './markup';
 import { LoadMoreButton } from './loadMoreButton';
 
 const refs = {
@@ -19,7 +18,7 @@ const onloadMoreButton = new LoadMoreButton({
     loading: false,
     buttonAdress: refs.loadMoreButton
 });
-let totalImagesUploaded = 40;
+let totalImagesUploaded = 40;    
 
 onloadMoreButton.buttonState({});
 
@@ -28,13 +27,17 @@ refs.loadMoreButton.addEventListener('click', onSumbitLoadMore);
 
 async function onSumbitForm(event) {
     event.preventDefault();
+    const { searchQuery } = event.currentTarget.elements;
+    if (!searchQuery.value.trim()) {
+        Notify.info('Please, enter data to search!');
+        return;
+    }
     refs.searchButton.disabled = true;
     onloadMoreButton.buttonState({
         isHiden: false,
         loading: true,
     });
-    const { searchQuery } = event.currentTarget.elements;
-    requestServer.params.page = 0;
+        requestServer.params.page = 0;
     refs.gallery.innerHTML = '';
     try {
         const response = await requestServer.onRequestServer(searchQuery.value);
@@ -47,8 +50,15 @@ async function onSumbitForm(event) {
             return;
         }
          Notify.success(`Hooray! We found ${totalHits} images.`)
-        refs.gallery.insertAdjacentHTML("beforeend", rendering(hits));
+        refs.gallery.insertAdjacentHTML("beforeend", markup(hits));
         refs.searchButton.disabled = false;
+        if (totalHits <= 40) {
+        onloadMoreButton.buttonState({
+        isHiden: true,
+        disabled: true,
+         });
+            return
+        };
         onloadMoreButton.buttonState({
         isHiden: false,
         disabled: false,
@@ -71,7 +81,7 @@ async function onSumbitLoadMore(event) {
         const response = await requestServer.onRequestServer();
         const { hits, totalHits } = response.data;
               
-        refs.gallery.insertAdjacentHTML("beforeend", rendering(hits));
+        refs.gallery.insertAdjacentHTML("beforeend", markup(hits));
         onloadMoreButton.buttonState({
         isHiden: false,
         disabled: false,
